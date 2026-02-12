@@ -6,7 +6,7 @@
 import { AgentMailClient } from 'agentmail';
 
 const AGENTMAIL_API_KEY = process.env.AGENTMAIL_API_KEY || '';
-const AGENTMAIL_INBOX = process.env.AGENTMAIL_INBOX || 'tawkie@agentmail.to';
+const AGENTMAIL_INBOX = process.env.AGENTMAIL_INBOX || 'you@agentmail.to';
 
 export interface Message {
   messageId: string;
