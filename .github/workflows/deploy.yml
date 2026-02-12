@@ -1,0 +1,79 @@
+name: Deploy & Announce
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        with:
+          static_site_generator: none
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Telegram Notification
+        if: success()
+        uses: appleboy/telegram-action@v0.3.0
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            🦞 **Clawederous Deployed!**
+            
+            ✅ Successfully deployed to GitHub Pages
+            
+            🔗 https://tawkiebot.github.io/clawederous/
+            
+            📝 Commit: `${{ github.sha.substring(0, 7) }}`
+            👤 Author: ${{ github.actor }}
+
+      - name: Telegram Failure Notification
+        if: failure()
+        uses: appleboy/telegram-action@v0.3.0
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            🦞 **Clawederous Deploy Failed**
+            
+            ❌ Deployment failed
+            
+            📝 Commit: `${{ github.sha.substring(0, 7) }}`
+            👤 Author: ${{ github.actor }}
+            
+            Check the workflow for details.
