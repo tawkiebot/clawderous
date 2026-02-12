@@ -2,13 +2,22 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Clawederous</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clawederous — Email as the Universal Interface</title>
   <script>
-    // GitHub Pages SPA fallback - redirect all 404s to index.html with path preserved
-    var path = window.location.pathname;
-    var search = window.location.search;
-    if (path !== '/clawederous/' && path !== '/clawederous/index.html') {
-      window.location.replace('/clawederous/?p=' + encodeURIComponent(path) + search);
+    // Redirect to the actual path if it exists as a static file
+    var path = window.location.pathname.replace('/clawederous', '');
+    if (path === '') path = '/';
+    
+    // List of static routes
+    var routes = ['/', '/about', '/docs/getting-started', '/docs/api', '/docs/workflows', '/workflows'];
+    
+    if (routes.indexOf(path) !== -1 || path.match(/^\/docs\//)) {
+      // Static file exists, just load the SPA
+      window.location.replace('/clawederous' + (path === '/' ? '/' : path + '/'));
+    } else {
+      // Fallback to home
+      window.location.replace('/clawederous/');
     }
   </script>
 </head>
