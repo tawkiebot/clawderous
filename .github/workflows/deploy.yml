@@ -46,26 +46,32 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Get deploy message from commit
-        id: message
+      - name: Get deploy details
+        id: details
         run: |
-          # Extract message from commit, or use default
+          # Commit info
+          echo "sha=$(echo ${{ github.sha }} | cut -c1-7)" >> $GITHUB_OUTPUT
+          echo "author=${{ github.actor }}" >> $GITHUB_OUTPUT
+          echo "branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+          
+          # Extract deploy message from commit, or use default
           MSG="${{ github.event.head_commit.message }}"
           if [[ "$MSG" == *"[deploy:"*"]"* ]]; then
-            # Extract text between [deploy: and ]
             DEPLOY_MSG=$(echo "$MSG" | sed -n 's/.*\[deploy:\(.*\)\].*/\1/p')
-            echo "deploy-message=$DEPLOY_MSG" >> $GITHUB_OUTPUT
+            echo "message=$DEPLOY_MSG" >> $GITHUB_OUTPUT
           else
-            echo "deploy-message=Deployed to GitHub Pages" >> $GITHUB_OUTPUT
+            echo "message=$MSG" >> $GITHUB_OUTPUT
           fi
 
       - name: Telegram Notification
         if: success()
         run: |
-          MSG="${{ steps.message.outputs.deploy-message }}"
+          SHA="${{ steps.details.outputs.sha }}"
+          AUTHOR="${{ steps.details.outputs.author }}"
+          MSG="${{ steps.details.outputs.message }}"
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -d "text=🦞 *Clawederous Update*%0A%0A${MSG}%0A%0A🔗 https://tawkiebot.github.io/clawederous/" \
+            -d "text=🦞 *Clawederous Update*%0A%0A${MSG}%0A%0A📦 *${SHA}* | @${AUTHOR}%0A🌐 https://tawkiebot.github.io/clawederous/" \
             -d "parse_mode=Markdown"
 
       - name: Telegram Failure Notification
