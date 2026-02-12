@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clawederous — Email as the Universal Interface</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/font/lucide.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0a0a0b;
+      --bg-secondary: #141418;
+      --bg-tertiary: #1c1c22;
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --text-muted: #6b6b73;
+      --accent: #c4a052;
+      --accent-light: #d4b872;
+      --accent-dark: #a88932;
+      --border: rgba(255,255,255,0.08);
+      --shadow: rgba(0,0,0,0.4);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(10,10,11,0.9), transparent);
+      z-index: 1000;
+      backdrop-filter: blur(20px);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--bg-primary);
+      padding: 0.7rem 1.5rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(196,160,82,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .hero-badge a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .hero-badge a:hover {
+      text-decoration: underline;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.8s ease 0.1s both;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-description {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 3rem;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      animation: fadeInUp 0.8s ease 0.3s both;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg-primary);
+      padding: 1rem 2rem;
+      border-radius: 100px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(196,160,82,0.3);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      padding: 1rem 2rem;
+      border-radius: 100px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      animation: bounce 2s infinite;
+    }
+
+    /* Code Example */
+    .code-section {
+      padding: 8rem 2rem;
+      background: var(--bg-secondary);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    .code-block {
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px var(--shadow);
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      background: var(--bg-tertiary);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .code-dot:nth-child(1) { background: #ff5f57; }
+    .code-dot:nth-child(2) { background: #febc2e; }
+    .code-dot:nth-child(3) { background: #28c840; }
+
+    .code-content {
+      padding: 2rem;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.9;
+    }
+
+    .code-content .to { color: #ff7b72; }
+    .code-content .subject { color: #a5d6ff; }
+    .code-content .comment { color: #8b949e; }
+    .code-content .arrow { color: #c4a052; }
+    .code-content .success { color: #7ee787; }
+
+    /* Features */
+    .features {
+      padding: 8rem 2rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      transition: all 0.4s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px var(--shadow);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--bg-primary);
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* Commands */
+    .commands {
+      padding: 8rem 2rem;
+      background: var(--bg-secondary);
+    }
+
+    .commands-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .command-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .command-item:hover {
+      border-color: var(--accent);
+    }
+
+    .command-slash {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .command-name {
+      font-weight: 500;
+    }
+
+    .command-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-left: auto;
+    }
+
+    /* Footer */
+    footer {
+      padding: 4rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    footer p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer .github-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    footer .github-link:hover {
+      border-color: var(--accent);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 4rem 1.5rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .code-section,
+      .features,
+      .commands {
+        padding: 4rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="logo">Clawederous<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#commands">Commands</a></li>
+      <li><a href="docs/about.html">About</a></li>
+      <li><a href="https://github.com/tawkiebot/clawederous">GitHub</a></li>
+    </ul>
+    <a href="https://github.com/tawkiebot/clawederous" class="nav-cta">Get Started</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-badge">
+      <i data-lucide="heart" style="width:14px;height:14px;"></i> A homage to <a href="docs/about.html">Posterous</a> (2008)
+    </div>
+    <h1>Email as the<br><span>Universal Interface</span></h1>
+    <p class="hero-description">
+      Send an email, get things done. No apps, no logins, no friction.
+      Your inbox is your terminal.
+    </p>
+    <div class="hero-buttons">
+      <a href="https://github.com/tawkiebot/clawederous" class="btn-primary">Start Building</a>
+      <a href="#how-it-works" class="btn-secondary">Learn More</a>
+    </div>
+    <div class="hero-scroll">
+      <i data-lucide="arrow-down" style="width:16px;height:16px;"></i>
+    </div>
+  </section>
+
+  <section class="code-section" id="how-it-works">
+    <div class="section-header">
+      <h2>How It Works</h2>
+      <p>One email. Infinite possibilities.</p>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-dot"></span>
+        <span class="code-dot"></span>
+        <span class="code-dot"></span>
+      </div>
+      <div class="code-content">
+        <span class="to">To: you@agentmail.to</span><br>
+        <span class="subject">Subject: /tweet Hello from Clawederous! 🦞</span><br>
+        <br>
+        <span class="comment"># Just send an email...</span><br>
+        <br>
+        <span class="arrow">→</span> <span class="success">Tweet posted successfully</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="section-header">
+      <h2>Why Email?</h2>
+      <p>The universal protocol, reimagined for agents.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i data-lucide="globe" style="width:24px;height:24px;"></i>
+        </div>
+        <h3>Universal Access</h3>
+        <p>Everyone has email. No new accounts, no lock-in. Works on any device, any client.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i data-lucide="cpu" style="width:24px;height:24px;"></i>
+        </div>
+        <h3>Agent-Ready</h3>
+        <p>Perfect interface for AI to parse and act on. Structured commands, natural language.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i data-lucide="lock" style="width:24px;height:24px;"></i>
+        </div>
+        <h3>No Lock-In</h3>
+        <p>Your data, your inbox, your rules. Portable, open, and under your control.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i data-lucide="zap" style="width:24px;height:24px;"></i>
+        </div>
+        <h3>Instant Setup</h3>
+        <p>AgentMail inbox in seconds. Configure once, use everywhere. Zero friction.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i data-lucide="message-circle" style="width:24px;height:24px;"></i>
+        </div>
+        <h3>Two-Way Flow</h3>
+        <p>Read, understand, reply. Unlike notifications, email is truly conversational.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i data-lucide="terminal" style="width:24px;height:24px;"></i>
+        </div>
+        <h3>Command Bus</h3>
+        <p>Short syntax → structured actions. Your inbox becomes an automation hub.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="commands" id="commands">
+    <div class="section-header">
+      <h2>Commands</h2>
+      <p>Shorthand power. Email as your terminal.</p>
+    </div>
+    <div class="commands-grid">
+      <div class="command-item">
+        <span class="command-slash">/tweet</span>
+        <span class="command-name">Tweet</span>
+        <span class="command-desc">Post to X</span>
+      </div>
+      <div class="command-item">
+        <span class="command-slash">/note</span>
+        <span class="command-name">Note</span>
+        <span class="command-desc">Save to knowledge base</span>
+      </div>
+      <div class="command-item">
+        <span class="command-slash">/claris</span>
+        <span class="command-name">Claris</span>
+        <span class="command-desc">Forward to recipient</span>
+      </div>
+      <div class="command-item">
+        <span class="command-slash">/log</span>
+        <span class="command-name">Log</span>
+        <span class="command-desc">Daily journal</span>
+      </div>
+      <div class="command-item">
+        <span class="command-slash">/remind</span>
+        <span class="command-name">Remind</span>
+        <span class="command-desc">Create reminder</span>
+      </div>
+      <div class="command-item">
+        <span class="command-slash">/summarize</span>
+        <span class="command-name">Summarize</span>
+        <span class="command-desc">AI summary</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Built with 🦞 by <a href="https://github.com/tawkiebot">Tawkie</a></p>
+    <a href="https://github.com/tawkiebot/clawederous" class="github-link">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+      </svg>
+      View on GitHub
+    </a>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.feature-card, .command-item').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'all 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
