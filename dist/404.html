@@ -10,7 +10,7 @@
     if (path === '') path = '/';
     
     // List of static routes
-    var routes = ['/', '/about', '/docs/getting-started', '/docs/api', '/docs/workflows', '/workflows'];
+    var routes = ['/', '/about', '/posterous', '/docs/getting-started', '/docs/api', '/docs/workflows', '/workflows'];
     
     if (routes.indexOf(path) !== -1 || path.match(/^\/docs\//)) {
       // Static file exists, just load the SPA

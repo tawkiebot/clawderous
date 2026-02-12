@@ -13,6 +13,7 @@ function prerenderPages() {
       
       const routes = [
         'about',
+        'posterous',
         'docs/getting-started',
         'docs/api',
         'docs/workflows',

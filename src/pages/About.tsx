@@ -61,8 +61,9 @@ export function About() {
           We believe in agents that have agency—ones that can communicate, act, and exist independently.
         </p>
         <p>
-          This project is a love letter to the early internet, to Posterous, to the idea that simple tools can change everything. 
-          It's also a bet on the future: where agents have identities, inboxes, and the ability to interact with the world on your terms.
+          This project is a love letter to the early internet, to <a href="/posterous" style={{color: 'var(--accent)', textDecoration: 'underline'}}>Posterous</a>, 
+          to the idea that simple tools can change everything. It's also a bet on the future: where agents have identities, 
+          inboxes, and the ability to interact with the world on your terms.
         </p>
       </div>
     </div>
