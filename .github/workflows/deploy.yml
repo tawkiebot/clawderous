@@ -61,26 +61,17 @@ jobs:
 
       - name: Telegram Notification
         if: success()
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: |
-            🦞 **Clawederous Update**
-
-            ${{ steps.message.outputs.deploy-message }}
-
-            🔗 https://tawkiebot.github.io/clawederous/
+        run: |
+          MSG="${{ steps.message.outputs.deploy-message }}"
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d "text=🦞 *Clawederous Update*%0A%0A${MSG}%0A%0A🔗 https://tawkiebot.github.io/clawederous/" \
+            -d "parse_mode=Markdown"
 
       - name: Telegram Failure Notification
         if: failure()
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: |
-            🦞 **Deploy Failed**
-            
-            ❌ ${{ github.event.head_commit.message }}
-            
-            Check the workflow for details.
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d "text=🦞 *Deploy Failed*%0A%0A❌ ${{ github.event.head_commit.message }}%0A%0ACheck the workflow for details." \
+            -d "parse_mode=Markdown
