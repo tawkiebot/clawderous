@@ -27,9 +27,9 @@ Edit `.env` with your credentials:
 
 ```env
 # Email (IMAP)
-IMAP_HOST=imap.agentmail.io
+IMAP_HOST=imap.agentmail.to
 IMAP_PORT=993
-IMAP_USER=your-email@agentmail.io
+IMAP_USER=your-email@agentmail.to
 IMAP_PASS=your-app-password
 
 # Agent
@@ -64,7 +64,7 @@ You should see:
 Send an email to your configured inbox:
 
 ```
-To: your-email@agentmail.io
+To: your-email@agentmail.to
 Subject: /ping
 
 Hello Clawederous!

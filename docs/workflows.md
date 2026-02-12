@@ -32,7 +32,7 @@ Shorthand notation in subject or first line, auto-parsed into structured notes s
 
 **Command**:
 ```
-To: tawkie@agentmail.io
+To: tawkie@agentmail.to
 Subject: /note Meeting with Gary
 
 Body: Action: follow up on pricing

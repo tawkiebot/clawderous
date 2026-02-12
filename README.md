@@ -15,7 +15,7 @@
 Clawederous is a personal automation layer that treats email as a command bus. Send an email, get things done. No apps, no logins, no friction.
 
 ```
-To: you@agentmail.io
+To: you@agentmail.**to**
 Subject: /tweet Hello from Clawederous! 🦞
 
 → Tweet posted. Confirmation reply sent.
@@ -31,7 +31,7 @@ Subject: /tweet Hello from Clawederous! 🦞
 ## Quick Example
 
 ```
-To: tawkie@agentmail.io
+To: tawkie@agentmail.to
 Subject: /note Meeting with Sarah
 
 Body:
