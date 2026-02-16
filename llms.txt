@@ -1,0 +1,31 @@
+# clawderous
+
+> Email-to-anything for OpenClaw. Claude on Claw, via Email.
+
+## Documentation
+
+- Overview: /docs/overview
+- Commands: /docs/commands
+- Architecture: /docs/architecture
+- Api: /docs/api
+- Workflows: /docs/workflows
+
+## Overview
+
+**Email as the Universal Interface for OpenClaw**
+
+## Commands
+
+All Clawderous commands are triggered via email subject line.
+
+## Architecture
+
+---
+
+## Api
+
+---
+
+## Workflows
+
+The `/run` command triggers OpenClaw workflows from email.
