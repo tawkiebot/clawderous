@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc && npm run build:frontend",
-    "build:frontend": "vite build && cp dist/index.html dist/404.html",
+    "build:frontend": "vite build",
     "dev": "ts-node src/index.ts & vite",
     "dev:frontend": "vite",
     "convex:dev": "npx convex dev",
