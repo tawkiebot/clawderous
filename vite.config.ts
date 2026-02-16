@@ -10,10 +10,10 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'dist',
+    outDir: 'docs',
     emptyOutDir: true,
   },
-  base: './',
+  base: '/clawderous/',
   server: {
     port: 5173,
   },
