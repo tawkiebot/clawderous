@@ -7,7 +7,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/clawderous/assets/index-BItUUAm8.js"></script>
+    <script>
+      // SPA routing fallback for GitHub Pages
+      (function() {
+        var params = new URLSearchParams(window.location.search);
+        var p = params.get('p');
+        if (p && window.location.pathname !== '/clawderous/' && window.location.pathname !== '/clawderous') {
+          // Already on index.html, nothing to do
+        } else if (p && window.location.pathname.indexOf(p) === -1) {
+          // Navigate to the correct path
+          window.history.replaceState(null, '', p);
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/clawderous/assets/index-CrJzE0pC.js"></script>
     <link rel="stylesheet" crossorigin href="/clawderous/assets/index-KDhVfdpA.css">
   </head>
   <body>

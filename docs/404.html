@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Clawderous</title>
+  <script>
+    // Extract path from URL
+    var path = window.location.pathname.replace(/^\/clawderous/, '');
+    if (!path) path = '/';
+    // Redirect to index.html with path as query param
+    window.location.replace('/clawderous/?p=' + encodeURIComponent(path));
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>
