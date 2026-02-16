@@ -17,9 +17,9 @@ function Nav() {
         <li><a href="/about" className={location.pathname === '/about' ? 'active' : ''}>About</a></li>
         <li><a href="/posterous" className={location.pathname === '/posterous' ? 'active' : ''}>Posterous</a></li>
         <li><a href="/docs/getting-started" className={location.pathname.startsWith('/docs') ? 'active' : ''}>Docs</a></li>
-        <li><a href="https://github.com/tawkiebot/clawederous">GitHub</a></li>
+        <li><a href="https://github.com/tawkiebot/clawderous">GitHub</a></li>
       </ul>
-      <a href="https://github.com/tawkiebot/clawederous" className="nav-cta">Get Started</a>
+      <a href="https://github.com/tawkiebot/clawderous" className="nav-cta">Get Started</a>
     </nav>
   )
 }
@@ -34,7 +34,7 @@ function Footer() {
 
 export default function App() {
   return (
-    <BrowserRouter basename="/clawederous">
+    <BrowserRouter basename="/clawderous">
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
