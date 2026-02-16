@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, useLocation, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, Link } from 'react-router-dom'
 import Home from './pages/Home'
 import { About } from './pages/About'
 import Posterous from './pages/Posterous'
@@ -34,7 +34,7 @@ function Footer() {
 
 export default function App() {
   return (
-    <HashRouter>
+    <BrowserRouter basename="/clawderous">
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -45,6 +45,6 @@ export default function App() {
         <Route path="/docs/workflows" element={<Workflows />} />
       </Routes>
       <Footer />
-    </HashRouter>
+    </BrowserRouter>
   )
 }
