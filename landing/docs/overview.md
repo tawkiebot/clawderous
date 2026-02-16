@@ -1,24 +1,103 @@
-# Clawderous Documentation
+# Clawderous Overview
 
-Clawderous is an email-to-anything automation tool.
+**Email as the Universal Interface for OpenClaw**
 
-## Quick Start
+---
 
-1. Send an email to clawderous@agentmail.to
-2. Use commands like `/memo`, `/blog`, `/run`
-3. Get automated responses
+## What is Clawderous?
 
-## Commands
+Clawderous brings the Posterous magic to the agent era. Instead of just blogging by email, you can do *anything* by emailing your agent.
 
-| Command | Description |
+> "Posterous let you blog by emailing. Clawderous lets you do *anything* by emailing your agent."
+
+### Key Features
+
+| Feature | Description |
 |---------|-------------|
-| `/memo` | Save a quick note |
-| `/blog` | Create a blog post |
-| `/run` | Execute a workflow |
-| `/reply` | Send a reply |
+| **📝 /memo** | Quick notes stored in Convex |
+| **✍️ /blog** | Publish blog posts with markdown |
+| **⚡ /run** | Trigger OpenClaw workflows |
+| **↩️ /reply** | Send email replies |
+| **🔍 /status** | View your Clawderous stats |
 
-## See Also
+---
 
-- [Getting Started](/docs/getting-started)
-- [API Reference](/docs/api)
-- [Workflows](/docs/workflows)
+## How It Works
+
+```
+User Email ──▶ Clawderous Engine ──▶ Output
+                 │
+     ┌──────────┼──────────┐
+     ▼          ▼          ▼
+   /memo      /blog      /run
+     │          │          │
+     ▼          ▼          ▼
+  Convex     Storage    Workflows
+```
+
+1. **You send an email** to `clawederous@agentmail.to`
+2. **Clawderous parses** the subject line for commands
+3. **Handlers execute** each command (memo, blog, run, etc.)
+4. **Results are stored** in Convex or triggered as workflows
+
+---
+
+## Why Email?
+
+- **Universal** — Everyone has email
+- **Familiar** — No new tools to learn  
+- **Asynchronous** — Works offline, anytime
+- **Portable** — Your agent, accessible anywhere
+
+---
+
+## Quick Example
+
+```
+To: clawederous@agentmail.to
+Subject: /memo Shopping List
+Body: 
+- Milk
+- Eggs
+- Coffee beans
+```
+
+**Response:**
+```
+✅ Memo saved!
+📝 Shopping List
+🔗 https://tawkie.dev/memo/abc123
+```
+
+---
+
+## Project Structure
+
+```
+clawderous/
+├── src/                 # React frontend website
+│   ├── pages/          # Home, About, Getting Started, API
+│   ├── App.tsx         # Main app component
+│   └── main.tsx        # Entry point
+├── landing/            # Backend email engine
+│   ├── index.ts        # Main entry
+│   ├── ingest/         # Email parsing (agentmail.ts, email.ts)
+│   ├── parse/          # Command parser (command.ts)
+│   ├── handlers/       # Command handlers (commands.ts)
+│   ├── functions/      # Convex functions
+│   └── docs/           # This documentation
+├── dist/               # Built frontend (deployed to GitHub Pages)
+└── package.json
+```
+
+---
+
+## Links
+
+- **Live Site**: [tawkiebot.github.io/clawderous](https://tawkiebot.github.io/clawderous)
+- **GitHub**: [github.com/tawkiebot/clawderous](https://github.com/tawkiebot/clawderous)
+- **Discord**: [discord.gg/DbbHB7g3](https://discord.gg/DbbHB7g3)
+
+---
+
+*Built by Tawkie 🦞 for OpenClaw*
