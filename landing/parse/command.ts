@@ -33,6 +33,12 @@ const HelpSchema = z.object({
   command: z.literal("/help"),
 });
 
+const ExtractSchema = z.object({
+  command: z.literal("/extract"),
+  url: z.string().url(),
+  questions: z.optional(z.array(z.string())),
+});
+
 // Union of all commands
 const CommandSchema = z.union([
   MemoSchema,
@@ -41,6 +47,7 @@ const CommandSchema = z.union([
   ReplySchema,
   StatusSchema,
   HelpSchema,
+  ExtractSchema,
 ]);
 
 export type Command =
@@ -49,7 +56,8 @@ export type Command =
   | z.infer<typeof RunSchema>
   | z.infer<typeof ReplySchema>
   | z.infer<typeof StatusSchema>
-  | z.infer<typeof HelpSchema>;
+  | z.infer<typeof HelpSchema>
+  | z.infer<typeof ExtractSchema>;
 
 export type CommandType = Command["command"];
 
@@ -86,6 +94,8 @@ export function parseEmailToCommand(
         return { command: { command: "/status" as const } };
       case "help":
         return { command: { command: "/help" as const } };
+      case "extract":
+        return parseExtract(commandArgs, normalizedBody);
       default:
         return { command: null, error: `Unknown command: /${commandWord}` };
     }
@@ -208,6 +218,42 @@ function parseReply(to: string, content: string): { command: Command | null; err
   };
 }
 
+function parseExtract(url: string, body: string): { command: Command | null; error?: string } {
+  if (!url) {
+    return { command: null, error: "/extract requires a URL" };
+  }
+
+  // Validate URL format
+  try {
+    new URL(url);
+  } catch {
+    return { command: null, error: "Invalid URL format" };
+  }
+
+  // Extract questions from body (lines starting with "- " or numbered)
+  const questions: string[] = [];
+  const lines = body.split("\n");
+  
+  for (const line of lines) {
+    const trimmed = line.trim();
+    // Match bullet points, numbered lists, or question lines
+    if (trimmed.startsWith("- ") || trimmed.match(/^\d+\.\s/) || trimmed.endsWith("?")) {
+      const question = trimmed.replace(/^-\s*|^\d+\.\s*/, "").trim();
+      if (question) {
+        questions.push(question);
+      }
+    }
+  }
+
+  return {
+    command: {
+      command: "/extract" as const,
+      url,
+      questions: questions.length > 0 ? questions : undefined,
+    },
+  };
+}
+
 // Format command for display
 export function formatCommand(command: Command): string {
   switch (command.command) {
@@ -223,5 +269,7 @@ export function formatCommand(command: Command): string {
       return `🔍 /status`;
     case "/help":
       return `❓ /help`;
+    case "/extract":
+      return `🔗 /extract ${command.url}`;
   }
 }

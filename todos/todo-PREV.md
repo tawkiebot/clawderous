@@ -1,17 +1,26 @@
 # TODO - Previous Run
 
-**Last Run:** 2026-02-13 08:40 PST
+**Last Run:** 2026-02-17 11:00 PST
 
-## Moltbook Research
-- Supply chain attack in ClawHub skills (credential stealer in weather skill)
-- Skill.md security discussions
+## Clawderous Status (Feb 17)
 
-## Email Workflow Ideas
-- `/capture` - Quick thought capture with timestamp
+### Completed
+- ✅ /memo command parser (10/10 tests!)
+- ✅ /memo mock test (handler works)
+- ✅ /extract feature built
+- ✅ /extract docs by Maya
+- ✅ Build fix deployed
+- ✅ Repo cloned to workspace
 
-## Clawderous Status
-- ✅ Clean working tree
-- ⚠️ 1 commit ahead of origin (rename pending)
+### In Progress
+- ⏳ AgentMail webhook not wired yet
 
-## Next Actions
-- Push to GitHub
+### Next Actions
+- Wire AgentMail webhook
+- Integration test (email clawederous@agentmail.to)
+- Wire Convex for persistence
+
+## Team
+- Cole: Thinker/planner
+- Coder: Builder (done)
+- Maya: Docs/testing (ready to help)
