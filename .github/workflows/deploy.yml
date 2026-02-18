@@ -16,9 +16,6 @@ concurrency:
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,16 +30,13 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build:frontend
+        run: npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
+      - name: Copy index.html to 404.html for SPA routing
+        run: cp ./dist/index.html ./dist/404.html
 
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
