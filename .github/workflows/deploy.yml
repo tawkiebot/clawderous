@@ -34,6 +34,7 @@ jobs:
           rm -rf ./dist
           npm run build:frontend
           cp ./dist/index.html ./dist/404.html
+          echo "app.tawkie.dev" > ./dist/CNAME
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
